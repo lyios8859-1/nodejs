@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
     }
   }).sort({"ctime":"desc"}).skip(0).limit(3);
 });
-/*//分页对象
+//分页对象
 var Params = {
   pageNo:0,
   pageSize:3
@@ -51,7 +51,7 @@ router.post('/search', function(req, res, next) {
     ];
     params["$or"] = likeArr; //or查询
   }
-
+console.log("--------------------------");
   //查询所有数据
   Content.find(params,function(err,result){
         if(!err){
@@ -68,17 +68,18 @@ router.post('/search', function(req, res, next) {
                    //对象混入
                    return mix(document,data);
                });
-              //异步返回查询数据和总数
-              //res.send({result:result,totalCount:count});
+              //异步返回查询数据和总数,在页面做拼接 (方式一)
+             // res.send({result:result,totalCount:count});
+              //跳转到模板页面(方式一)
               res.render("partials/contenttemplate",{result:newData,totalCount:count,layout:null});
             }
           });
         }
   }).sort({ctime:"desc"}).skip(Params.pageNo).limit(Params.pageSize);
-});*/
+});
 
 
-
+/*
 //分页对象
 var Params = {
   pageNo:0,
@@ -130,7 +131,7 @@ router.post('/search', function(req, res, next) {
           });
         }
   }).sort({ctime:"desc"}).skip(Params.pageNo).limit(Params.pageSize);
-});
+});*/
 
 //详情页面
 router.get('/pages/:id', function(req, res, next) {

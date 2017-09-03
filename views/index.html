@@ -63,7 +63,7 @@
                        //把数据渲染后的模板页添加到当前页面
                         var dats = $("#contentbox").append(data);
                         if(keyword){ //搜索关键字高亮
-                           keyLight("contentbox", keyword,"red");    
+                           keyLight("contentbox", keyword,"#da9999");    
                         } 
                         var itemcount = $("#contentbox").children().eq(0).data("itemcount");
                         //拿到当前加载的条数
@@ -139,7 +139,6 @@
 
     lyContent.init();
 
- 
 /*var key1 = keyLight('contentbox', '和尚')
 var key2 = keyLight('contentbox', '一', 'red')
 //搜索的关键字高亮   
@@ -148,7 +147,7 @@ function keyLight(id, key, bgColor){
     var oDiv = document.getElementById(id);
     var oChilds  = oDiv.childNodes;
     var bgColor = bgColor || "orange";
-    var sKey = "<span style='font-size:16px;background-color: "+bgColor+";'>"+key+"</span>";
+    var sKey = "<span style='background-color: "+bgColor+";'>"+key+"</span>";
     var rStr = new RegExp(key, "g");
     for(var i =0; i<oChilds.length-1; i++){
         if(oChilds[i].nodeType == 3 && /\s/.test(oChilds[i].nodeValue)){  //删除空白的节点
@@ -157,8 +156,6 @@ function keyLight(id, key, bgColor){
         oChilds[i].innerHTML = oChilds[i].innerHTML.replace(rStr,sKey);  //替换key
     }
 }
- 
-
 
 </script>
 
