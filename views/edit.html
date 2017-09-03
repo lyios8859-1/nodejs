@@ -17,8 +17,6 @@
     $(function(){
          var ue = UE.getEditor('editor');
     });
-
-
     var lyBlog = {
         save:function(obj){
             var title = $("input[name='title']").val();
@@ -28,20 +26,15 @@
             var opid = $("input[name='id']").val();
             var ctext = getEditorText("editor");
             var content = getEditorHTML("editor");
-
-
             if(title == ""){
                 alert("请输入标题....");
                 $("input[name='title']").focus();
                 return;
             }
-
-
             if(ctext==""){
                 alert("请输入内容....");
                 return;
             }
-
             //alert(title+"==="+link+"==="+tags+"==="+cid+"==="+ctext+"==="+content);
             var params = {title:title,link:link,tags:tags,cid:cid,content:content};    
             $.ajax({
@@ -57,9 +50,6 @@
             });
         }
     };
-
-    
 </script>
-
 <!--底部-->
 {{> footer}}

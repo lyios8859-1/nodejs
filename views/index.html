@@ -12,25 +12,22 @@
             <div class="itembox" id="contentbox">
                 {{> contenttemplate}} 
             </div>
-            <div class="loadmore" onclick="lyContent.load()"><span class="text">加载更多</span>【总共<span class="itemcount">{{totalCount}}</span>条】...</div>
+            <div class="loadmore" onclick="lyContent.load()"><span class="text">加载更多</span>【总共<span class="itemcount">{{totalCount}}</span>条】</div>
     </div>
 </div>
 
 <script>
-
     var lyContent = {
         pageNo:1,
-        pageSize:2,
+        pageSize:3,
         search:function(callback){
-            
-             //要搜索的关键词   
-            /*var keyword = $("#keyword").val();
+            //要搜索的关键词   
+            var keyword = $("#keyword").val();
             if(!keyword){
                 alert("请输入关键词");
                 $("#keyword").focus();
                 return;
-            }*/
-
+            }
             //this是指：lyContent
             this.cmark = true;    
             //清零
@@ -42,7 +39,7 @@
                 $(".itemcount").html(itemcount);
             });
         },
-        load:function(callback){
+       load:function(callback){
             var that = this;
             console.log(that.cmark);
             if(!that.cmark)return;
@@ -63,9 +60,11 @@
                 success:function(data){
                    
                     if(data){
-                        $("#contentbox").append(data); 
-                        keyLight('contentbox', keyword);
-                         //alert(JSON.stringify($("#contentbox").append(data)));   
+                       //把数据渲染后的模板页添加到当前页面
+                        var dats = $("#contentbox").append(data);
+                        if(keyword){ //搜索关键字高亮
+                           keyLight("contentbox", keyword,"red");    
+                        } 
                         var itemcount = $("#contentbox").children().eq(0).data("itemcount");
                         //拿到当前加载的条数
                         var len = $("#contentbox").children().length;
@@ -73,7 +72,7 @@
                             that.cmark = false;
                             $(".loadmore").removeAttr("onclick").hide();
                             $(".itemcount").html(0);
-                            $("#contentbox").html("<h1>没有找到相关【"+keyword+"】的数据....</h1>");
+                            $("#contentbox").html("<h1 style='text-align:center;'>【"+keyword+"】的数据跑到火星去了!!!!@_@</h1>");
                         }
 
                         if(len < that.pageSize){
@@ -92,11 +91,33 @@
                         $(".loadmore").attr("onclick","lyContent.load()");
                         if(callback)callback(itemcount);
                         that.pageNo++;
-                    }else if(data!=null &&that.pageNo>0){
-                        $("#contentbox").append(" <div class='showpage'>"+that.pageNo+" end </div>");   
-                    }
+                    } 
                 }
             })
+        },
+        del:function(){
+            var opid = $("#del").data("opid");
+            $.ajax({
+                type:"post",
+                url:"/del",
+                data:{opid:opid},
+                success:function(data){
+                    if(data=="success"){
+                        if($(".itemcount")){
+                           var count = parseInt($(".itemcount").text());
+                            --count;
+                            $(".itemcount").html(count); 
+                        }
+                        if(confirm("确定删除吗?")){
+                            $("#"+opid).fadeOut(1000,function(){
+                               // $(".itemcount").html=count;
+                                $("#"+opid).remove();
+                            });
+                            
+                        }
+                    }
+                }
+            });
         },
 
         cmark:true,
@@ -113,6 +134,7 @@
                 }
             } ; 
         }
+
     };
 
     lyContent.init();
@@ -136,9 +158,8 @@ function keyLight(id, key, bgColor){
     }
 }
  
- 
 
- 
+
 </script>
 
 <!--end 内容区域-->
