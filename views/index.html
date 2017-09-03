@@ -23,11 +23,11 @@
         search:function(callback){
             //要搜索的关键词   
             var keyword = $("#keyword").val();
-            if(!keyword){
+           /* if(!keyword){
                 alert("请输入关键词");
                 $("#keyword").focus();
                 return;
-            }
+            }*/
             //this是指：lyContent
             this.cmark = true;    
             //清零
@@ -48,11 +48,12 @@
             //分页信息
             var cpageNo = that.pageNo *  that.pageSize; 
             var cpageSize = that.pageSize;
+            //显示页数
+            if(that.pageNo>0)$("#contentbox").append("<div class='showpage'>-"+that.pageNo+"-</div>");
             //防止重复点击
             $(".loadmore").removeAttr("onclick");
             //执行数据请求
             that.cmark = false;
-            console.log("===="+that.cmark);
             $.ajax({
                 type:"post",
                 url:"/search",
