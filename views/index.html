@@ -139,7 +139,7 @@
 
     lyContent.init();
 
-/*var key1 = keyLight('contentbox', '和尚')
+/*var key1 = keyLight('contentbox', 'sou')
 var key2 = keyLight('contentbox', '一', 'red')
 //搜索的关键字高亮   
 */        
@@ -154,6 +154,7 @@ function keyLight(id, key, bgColor){
             oChilds[i].parentNode.removeChild(oChilds[i]);
         }
         oChilds[i].innerHTML = oChilds[i].innerHTML.replace(rStr,sKey);  //替换key
+
     }
 }
 
