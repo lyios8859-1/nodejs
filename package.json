@@ -5,7 +5,6 @@
   "scripts": {
     "start": "supervisor ./bin/www"
   },
-
   "dependencies": {
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
@@ -13,14 +12,13 @@
     "express": "~4.14.0",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
-  },
-
-  "devDependencies": {
+    "serve-favicon": "~2.3.0",
     "cookie-session": "^2.0.0-alpha.2",
     "express3-handlebars": "^0.5.2",
     "mongoose": "^4.7.6",
     "trim-html": "^0.1.7"
+  },
+  "devDependencies": {
+    "bower": "^1.8.2"
   }
-  
 }
