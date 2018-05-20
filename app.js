@@ -81,6 +81,10 @@ app.use(function(req,res,next){
 //路由注册
 app.use('/', index);
 
+//登录页面
+app.use('/login', function(req,res,next){
+	res.redirect("/login.html");                
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
