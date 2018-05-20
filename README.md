@@ -5,7 +5,7 @@
 # 技术栈
 * 包管理工具bower
 * supervisor修改完代码后自动重启nodejs服务器
-* nodejs@8.9 + jade + mongodb(mongoose)@3.4 + express@4.0 + Handlebars
+* nodejs@8.9 + mongodb(mongoose)@3.4 + express@4.0 + Handlebars
 
 # 使用
 ######	克隆到本地
