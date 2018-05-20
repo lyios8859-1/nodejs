@@ -9,7 +9,7 @@
 
 # 使用
 ######	克隆到本地
-	git colone https://github.com/lyios8859-1/nodejs.git
+	git clone https://github.com/lyios8859-1/nodejs.git
 ######   安装
 	npm install
 ######	运行
