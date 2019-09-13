@@ -4,44 +4,55 @@
     <input type="text" id="keyword">
     <input type="button" id="search" onclick="lyContent.search(this)" value="搜索"/>
     <!-- 搜索的文章总数:<span class="itemcount">{{totalCount}}</span> -->
-    &nbsp;&nbsp;&nbsp;<a href="/add">添加文章</a>
+    <a href="/add">添加文章</a>
 </div>
-<!--内容区域-->
+<!-- 内容区域 -->
 <div class="wrapbox">
-    <div class="w700 mauto">
-            <div class="itembox" id="contentbox">
-                {{> contenttemplate}} 
-            </div>
-            <div class="loadmore" onclick="lyContent.load()"><span class="text">加载更多</span>【总共<span class="itemcount">{{totalCount}}</span>条】</div>
+    <!-- 左侧显示列表 -->
+    <div class=" mautomodi mauto"> <!--w700-->
+        <div class="itembox" id="contentbox">
+            {{> contenttemplate}}
+        </div>
+        <div class="loadmore" onclick="lyContent.load()"><span class="text">加载更多</span>【总共<span class="itemcount">{{totalCount}}</span>条】</div>
     </div>
+    <!-- 右侧侧显示标签 -->
+    <!-- <div class="w500 mark">
+
+    </div> -->
+</div>
+<div class="clearfix"></div>
+
+<!-- 回到顶部-->
+<div id="to_top" class="top">
+    <div class="top-in"></div>
 </div>
 
 <script>
     var lyContent = {
-        pageNo:1,
-        pageSize:3,
-        search:function(callback){
-            //要搜索的关键词   
-            var keyword = $("#keyword").val();
-           /* if(!keyword){
-                alert("请输入关键词");
-                $("#keyword").focus();
-                return;
-            }*/
-            //this是指：lyContent
-            this.cmark = true;    
-            //清零
-            this.pageNo = 0;
-            //记得清空
-            $("#contentbox").empty();    
-            $(".loadmore").show().attr("onclick","lyContent.load()");
-            this.load(function(itemcount){
-                $(".itemcount").html(itemcount);
-            });
-        },
-       load:function(callback){
+      pageNo:1,
+      pageSize:3,
+      search:function(callback){
+        //要搜索的关键词
+        var keyword = $("#keyword").val();
+        /* if(!keyword){
+               alert("请输入关键词");
+               $("#keyword").focus();
+               return;
+           }*/
+        //this是指：lyContent
+        this.cmark = true;
+        //清零
+        this.pageNo = 0;
+        //记得清空
+        $("#contentbox").empty();
+        $(".loadmore").show().attr("onclick","lyContent.load()");
+        this.load(function(itemcount){
+          $(".itemcount").html(itemcount);
+        });
+      },
+      load:function(callback){
             var that = this;
-            console.log(that.cmark);
+           // console.log(that.cmark);
             if(!that.cmark)return;
              //要搜索的关键词   
             var keyword = $("#keyword").val();
@@ -59,7 +70,6 @@
                 url:"/search",
                 data:{keyword:keyword,pageNo:cpageNo,pageSize:cpageSize},
                 success:function(data){
-                   
                     if(data){
                        //把数据渲染后的模板页添加到当前页面
                         var dats = $("#contentbox").append(data);
@@ -96,69 +106,49 @@
                 }
             })
         },
-        del:function(){
-            var opid = $("#del").data("opid");
-            $.ajax({
-                type:"post",
-                url:"/del",
-                data:{opid:opid},
-                success:function(data){
-                    if(data=="success"){
-                        if($(".itemcount")){
-                           var count = parseInt($(".itemcount").text());
-                            --count;
-                            $(".itemcount").html(count); 
-                        }
-                        if(confirm("确定删除吗?")){
-                            $("#"+opid).fadeOut(1000,function(){
-                               // $(".itemcount").html=count;
-                                $("#"+opid).remove();
-                            });
-                            
-                        }
-                    }
-                }
-            });
-        },
-
-        cmark:true,
-        init:function(){
-            var  that  = this;
-            window.onscroll = function(){
-                if(that.cmark){
-                    var cheight = window.innerHeight;
-                    var stop = document.body.scrollTop || document.documentElement.scrollTop;
-                    var dheight = document.body.clientHeight;
-                    if(cheight + stop + 3 >=dheight){
-                            lyContent.load();
-                    }
-                }
-            } ; 
-        }
+      del:function(){
+        var opid = $("#del").data("opid");
+        $.ajax({
+          type:"post",
+          url:"/del",
+          data:{opid:opid},
+          success:function(data){
+            if(data=="success"){
+              if($(".itemcount")){
+                var count = parseInt($(".itemcount").text());
+                --count;
+                $(".itemcount").html(count);
+              }
+              if(confirm("确定删除吗?")){
+                $("#"+opid).fadeOut(1000,function(){
+                  // $(".itemcount").html=count;
+                  $("#"+opid).remove();
+                });
+              }
+            }
+          }
+        });
+      },
+      cmark:true,
+      init:function(){
+        var  that  = this;
+        window.onscroll = function(){
+          if(that.cmark){
+            var cheight = window.innerHeight;
+            var stop = document.body.scrollTop || document.documentElement.scrollTop;
+            var dheight = document.body.clientHeight;
+            if(cheight + stop + 3 >= dheight){
+              lyContent.load();
+            }
+          }
+        } ;
+      }
 
     };
-
-    lyContent.init();
-
-/*var key1 = keyLight('contentbox', 'sou')
-var key2 = keyLight('contentbox', '一', 'red')
-//搜索的关键字高亮   
-*/        
-function keyLight(id, key, bgColor){
-    var oDiv = document.getElementById(id);
-    var oChilds  = oDiv.childNodes;
-    var bgColor = bgColor || "orange";
-    var sKey = "<span style='background-color: "+bgColor+";'>"+key+"</span>";
-    var rStr = new RegExp(key, "g");
-    for(var i =0; i<oChilds.length-1; i++){
-        if(oChilds[i].nodeType == 3 && /\s/.test(oChilds[i].nodeValue)){  //删除空白的节点
-            oChilds[i].parentNode.removeChild(oChilds[i]);
-        }
-        oChilds[i].innerHTML = oChilds[i].innerHTML.replace(rStr,sKey);  //替换key
-
+    window.onload = function () {
+      /*滚动加载*/
+      lyContent.init();
     }
-}
-
 </script>
 
 <!--end 内容区域-->

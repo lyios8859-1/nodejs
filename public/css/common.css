@@ -46,16 +46,13 @@ input::-moz-selection,textarea::-moz-selection,.btn-positive::-moz-selection{bac
 .br5{border-radius:5px!important;}
 input:disabled,select:disabled,textarea:disabled{background:#ccc!important;}
 
-
 .z,.fl{float:left!important;}
 .y,.fr{float:right!important;}
-
 
 .red{color:#E2170C!important;}
 .green{color:#009688!important;}
 .cof{color:#fff!important;}
 .pru{color:#009688!important;}
-
 
 .c1{color:#e91e63!important;}
 .c2{color:#4caf50!important;}
@@ -65,11 +62,9 @@ input:disabled,select:disabled,textarea:disabled{background:#ccc!important;}
 .c6{color:#999!important;}
 .color_9{color:#999999!important;}
 
-
 .pr{position:relative;}
 .pa{position:absolute}
 .pf{position:fixed;}
-
 
 .tp1{top:1px;position:relative!important;}
 .tp2{top:2px;position:relative!important;}
@@ -172,7 +167,6 @@ scrollbar[orient="vertical"]{min-width:8px !important;}
 .pr20{padding-right:20px!important;}
 .pd10{padding:10px!important;}
 .pd5{padding:5px!important;}
-
 
 .font12{font-size:12px!important;}
 .font18{font-size:18px!important;}
