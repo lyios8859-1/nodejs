@@ -93,6 +93,7 @@ router.get('/add', function (req, res, next) {
 
 // 保存的业务
 router.post('/save', function (req, res, next) {
+  console.log(req.body)
   new Content(req.body).save(function (err, result) {
     if (!err) {
       res.send(result);
