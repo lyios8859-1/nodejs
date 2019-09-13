@@ -31,4 +31,4 @@ npm install [--registry=https://registry.npm.taobao.org]
 npm start
 ```
 
-在浏览器地址栏输入： `http://localhost:3000/login`
+在浏览器地址栏输入： `http://localhost:8080/login`
