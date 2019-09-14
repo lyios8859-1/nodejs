@@ -17,14 +17,13 @@ router.post('/logined', function (req, res, next) {
   //     res.send("fail");
   //   }
   // });
-
-  // 判断用户名密码是否正确
-  User.findOne({ 'username': 'tom' }, function (err, user) {
-    if (err) return err;
-    if (req.session.username ==  req.body.username) {
-      console.log("已经登录");
-      next();
-    } else {
+  if (req.session.username ==  req.body.username) {
+    console.log("已经登录");
+    next();
+  } else {
+    // 判断用户名密码是否正确
+    User.findOne({ 'username': 'tom' }, function (err, user) {
+      if (err) return err;
       // 判断该用户是否存在
       if(user.password == req.body.password && user.username == req.body.username) {
         // 将用户信息写入 session
@@ -34,11 +33,8 @@ router.post('/logined', function (req, res, next) {
       } else {
         res.send("用户名或密码不正确");
       }
-
-    }
-  });
-
-  // console.log(">>>>",req.session);
+    });
+  }
 
   // if (req.session.user) {  // 判断用户是否登录
   //   res.render('admin/index', {title: '后台首页', layout: null});
