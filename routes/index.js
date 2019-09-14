@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const trimHtml = require('trim-html');
+// const trimHtml = require('trim-html');
 // console.log(trimHtml+"===");
 const Content = require("../dao/content");
 // 首页查询数据
 router.get('/', function (req, res, next) {
-  
   Content.find({status: 1, isdelete: 0}, function (err, result) {
     if (!err) {
       Content.count({status: 1, isdelete: 0}, function (err, count) {

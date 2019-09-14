@@ -19,7 +19,8 @@ router.post('/logined', function (req, res, next) {
   // });
   if (req.session.username ==  req.body.username) {
     console.log("已经登录");
-    next();
+    // next();
+    res.send("success");
   } else {
     // 判断用户名密码是否正确
     User.findOne({ 'username': 'tom' }, function (err, user) {
