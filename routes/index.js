@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var trimHtml = require('trim-html');
+const express = require('express');
+const router = express.Router();
+const trimHtml = require('trim-html');
 // console.log(trimHtml+"===");
-var Content = require("../dao/content");
+const Content = require("../dao/content");
 // 首页查询数据
 router.get('/', function (req, res, next) {
   
@@ -11,8 +11,8 @@ router.get('/', function (req, res, next) {
       Content.count({status: 1, isdelete: 0}, function (err, count) {
         if (!err) {
           //数据的进一步处理
-          var newData = result.map(function (document, index, currentArr) {
-            var data = {
+          let newData = result.map(function (document, index, currentArr) {
+            let data = {
               title: document.getTitle(),
               // content:trimHtml(document.content, { limit: 5 }).html // 已经放在自定义标签处理了,这就可以不用了
               content: document.content
@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
   }).sort({"ctime": "desc"}).skip(0).limit(3);
 });
 // 分页对象
-var Params = {
+let Params = {
   pageNo: 0,
   pageSize: 3
 };
@@ -40,12 +40,12 @@ router.post('/search', function (req, res, next) {
   Params.pageNo = parseInt(req.body.pageNo || 0, 10);
   Params.pageSize = parseInt(req.body.pageSize || 3, 10);
   // 查询条件
-  var params = {status: 1, isdelete: 0};
+  let params = {status: 1, isdelete: 0};
   // 获取关键词进行检索
-  var keyword = req.body.keyword;
+  let keyword = req.body.keyword;
   if (keyword) {
     // 模糊搜索的条件
-    var likeArr = [
+    let likeArr = [
       {title: {$regex: keyword, $options: "i"}},
       {content: {$regex: keyword, $options: "i"}}
     ];
@@ -58,8 +58,8 @@ router.post('/search', function (req, res, next) {
       Content.count(params, function (err, count) {
         if (!err) {
           // 数据的进一步处理
-          var newData = result.map(function (document, index, currentArr) {
-            var data = {
+          let newData = result.map(function (document, index, currentArr) {
+            let data = {
               title: document.getTitle(),
               // content:trimHtml(document.content, { limit: 5 }).html// 已经放在自定义标签处理了,这就可以不用了
               content: document.content
@@ -136,16 +136,16 @@ router.post('/del', function (req, res, next) {
 
 // 多对象混入
 function mix(target, source) {
-  var arr = [];
-  var args = arr.slice.call(arguments);
+  let arr = [];
+  let args = arr.slice.call(arguments);
 
-  var i = 1;
+  let i = 1;
   if (args.length == 1) {
     return target;
   }
 
   while ((source = args[i++])) {
-    for (var key in source) {
+    for (let key in source) {
       if (source.hasOwnProperty(key)) {
         target[key] = source[key];
       }
