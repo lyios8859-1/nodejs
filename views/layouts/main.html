@@ -9,8 +9,14 @@
 <script src="/js/handlebars-v4.0.5.js"></script>
 <script src="/js/ly_admin.js"></script>
 <script src="/js/util.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/anime.min.js"></script>
 </head>
 <body>
-{{{body}}}
+  <canvas class="fireworks" width="1104" height="1898" style="position: fixed;width: 100%; height: 100%;z-index: -1;"></canvas>
+  {{{body}}}
+  
+  <script src="/js/fireworks.js"></script>
+  <script src="/js/headerevent.js"></script>
 </body>
 </html>

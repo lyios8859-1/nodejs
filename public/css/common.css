@@ -173,3 +173,7 @@ scrollbar[orient="vertical"]{min-width:8px !important;}
 .font22{font-size:22px!important;}
 .font24{font-size:24px!important;}
 .font30{font-size:30px!important;}
+
+/*控制鼠标选中文字的样式*/
+::selection {background:lightblue; color: red;}
+::-moz-selection {background:lightblue;color: red;}
