@@ -133,13 +133,23 @@ router.post('/del', function(req, res, next) {
   });
 });
 
+// 没有登录就登录
+router.get('/login', function(req, res, next) {
+  if (req.session.username === req.params.name) {
+    console.log('已经登录');
+    res.redirect('/');
+  } else {
+    res.render('admin/login', { title: '请登录', layout: null });
+  }
+});
+
 // 多对象混入
 function mix(target, source) {
   const arr = [];
   const args = arr.slice.call(arguments);
 
   let i = 1;
-  if (args.length == 1) {
+  if (args.length === 1) {
     return target;
   }
 

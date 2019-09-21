@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../../dao/user");
+const User = require('../../dao/user');
 // 登录页面
-router.get('/login', function (req, res, next) {
-  console.log('*'.repeat(100))
-  res.render('admin/login', {title: '请登录', layout: null});
+router.get('/login', function(req, res, next) {
+  console.log('*'.repeat(100));
+  if (req.session.username === req.body.username) {
+    console.log('已经登录');
+    res.redirect('/');
+  } else {
+    res.render('admin/login', { title: '请登录', layout: null });
+  }
 });
 
 // 登录首页
-router.post('/logined', function (req, res, next) {
+router.post('/logined', function(req, res, next) {
   // new User(req.body).save(function (err, result) {
   //   console.log(">>>>>>>>>>>>>>>>>.")
   //   if (!err) {
@@ -17,22 +22,23 @@ router.post('/logined', function (req, res, next) {
   //     res.send("fail");
   //   }
   // });
-  if (req.session.username ==  req.body.username) {
-    console.log("已经登录");
+  console.log('>>>>', req.session.username, req.body.username, req.session.username === req.body.username);
+  if (req.session.username === req.body.username) {
+    console.log('已经登录');
     // next();
-    res.send("success");
+    res.send('success');
   } else {
     // 判断用户名密码是否正确
-    User.findOne({ 'username': 'tom' }, function (err, user) {
+    User.findOne({ 'username': 'tom' }, function(err, user) {
       if (err) return err;
       // 判断该用户是否存在
-      if(user.password == req.body.password && user.username == req.body.username) {
+      if (user.password === req.body.password && user.username === req.body.username) {
         // 将用户信息写入 session
-        req.session.username = user.username;  
-        console.log("登录成功");
-        res.send("success");
+        req.session.username = user.username;
+        console.log('登录成功');
+        res.send('success');
       } else {
-        res.send("用户名或密码不正确");
+        res.send('用户名或密码不正确');
       }
     });
   }

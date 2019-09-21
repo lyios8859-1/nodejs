@@ -1,6 +1,6 @@
 var path = require('path');
 var express = require('express');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
@@ -63,7 +63,7 @@ app.use('/music', music);
 app.use(function(req, res, next) {
   var json = req.session.user;
   var url = req.url;
-  if (url.indexOf('admin') != -1 || url.indexOf('user') != -1) { // 是需要拦截的,如果你URL地址包含admin这个关键词
+  if (url.indexOf('admin') !== -1 || url.indexOf('user') !== -1) { // 是需要拦截的,如果你URL地址包含admin这个关键词
     if (!json) { // 如果没有登录
       if (req.xhr) {
         res.send('logout');
