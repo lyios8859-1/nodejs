@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="/js/music.js"></script>
+  <title>{{title}}</title>
+</head>
+<body>
+<div>
+  <script>
+    const playParams = {
+      src:"/uploads/2017/12/10.mp3",
+      attr:{
+        loop:true,
+        volume: 0.8,
+        autoplay: true
+      },
+      events:{
+        play:function(){
+          console.log("开始播放了")
+        }
+      }
+    };
+    const audio = new AudioController(playParams);
+    audio.play();
+    console.log(audio);
+  </script>
+</div>
+</body>
+</html>

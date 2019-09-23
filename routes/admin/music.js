@@ -3,6 +3,6 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
-  res.send('musin page');
+  res.render('admin/music/index', { title: '歌曲欣赏', layout: null });
 });
 module.exports = router;
