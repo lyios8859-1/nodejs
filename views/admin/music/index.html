@@ -15,19 +15,22 @@
     const playParams = {
       src:"/uploads/2017/12/10.mp3",
       attr:{
-        loop:true,
+        loop: false,
         volume: 0.8,
         autoplay: true
       },
       events:{
-        play:function(){
+        play: function() {
           console.log("开始播放了")
+        },
+        ended: function() {
+          console.log("播放结束了！");
+          this.pause();
         }
       }
     };
     const audio = new AudioController(playParams);
     audio.play();
-    console.log(audio);
   </script>
 </div>
 </body>
