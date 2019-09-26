@@ -8,24 +8,46 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="/js/music.js"></script>
   <title>{{title}}</title>
+  <button onclick="loop()">单曲循环</button>
+  <button onclick="listLoop()">列表循环</button>
 </head>
 <body>
 <div>
   <script>
+    
+    let isLoop = 0;
+    function loop() {
+      isLoop = 0;
+      alert(isLoop);
+    }
+    function listLoop() {
+      isLoop = 1;
+      alert(isLoop);
+    }
     const playParams = {
-      src:"/uploads/2017/12/10.mp3",
+      src:"/uploads/2017/12/11.mp3",
       attr:{
-        loop: false,
         volume: 0.8,
-        autoplay: true
       },
       events:{
         play: function() {
           console.log("开始播放了")
         },
         ended: function() {
-          console.log("播放结束了！");
-          this.pause();
+          if(isLoop === 0) {
+            // 单曲播放
+            audio.loopPlay(true);
+            console.log('单曲播放');
+          } else if(isLoop === 1) {
+            console.log('列表循环');
+            // 列表循环
+          } else if(isLoop === 2) {
+            console.log('随机播放');
+            // 随机播放
+          }
+        },
+        timeupdate() {
+          console.log(this.currentTime);
         }
       }
     };
