@@ -42,6 +42,53 @@
   </div>
 
 <script>
+  function err(err){
+    console.error(err)
+  }
+  function ajax(options = {}) {
+    options = {
+      type: options.type.toUpperCase() || 'GET',
+      url: options.url || err(`Url isn't exite`),
+      async: options.async || true,
+      data: options.data || {},
+      success: options.success || function() {},
+      error: options.error || function() {},
+    }
+
+    const xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    
+    let paramsStr = '';
+    for (const key in options.data) {
+      paramsStr += `${key}=${options['data'][key]}&`;
+    }
+    options.data = paramsStr.substring(0, paramsStr.length - 1);
+
+    if (options.type.toUpperCase() === 'GET') {
+      xhr.open('GET', options.url, options.async);
+      xhr.send(null);
+    } else {
+      xhr.open('POST', options.url, options.async);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+      xhr.send(options.data);
+    }
+
+    xhr.onreadystatechange = function () {
+      if (xhr.status !== 200) {
+        options.error({error: 'Request fail.', message: xhr.responseText});
+      } else if (xhr.readyState == 4 && xhr.status == 200) {
+        options.success(xhr.responseText);
+      }
+    }
+  }
+  ajax({
+    type: 'get',
+    url: '/music/getLrc',
+    data: {},
+    success: function (res) {
+      console.log(res);
+    }
+
+  });
   const processWidthDom = document.querySelector('.p_digital');
   const currentTimeDom = document.querySelector('.currentTime');
   const durationDom = document.querySelector('.duration');
@@ -80,6 +127,7 @@
     console.log('暂停');
     audio.pause();
   }
+
   const playParams = {
     src:'/uploads/2017/12/10.mp3',
     attr:{
