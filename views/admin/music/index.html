@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
@@ -8,52 +7,114 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="/js/music.js"></script>
   <title>{{title}}</title>
-  <button onclick="loop()">单曲循环</button>
-  <button onclick="listLoop()">列表循环</button>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </head>
 <body>
-<div>
-  <script>
-    
-    let isLoop = 0;
-    function loop() {
-      isLoop = 0;
-      alert(isLoop);
+  <button onclick="loop()">单曲循环</button>
+  <button onclick="listLoop()">列表循环</button>
+  <button onclick="radomPlay()">随机播放</button>
+  <button onclick="stop()">暂停</button>
+  <button onclick="play()">播放</button>
+
+  <style>
+    .process {
+      box-sizing: border-box;
+      width: 100%;
+      height: 10px;
+      background: #ccc;
+      padding: 0 10px;
     }
-    function listLoop() {
-      isLoop = 1;
-      alert(isLoop);
+    .p_digital {
+      width: 11%;
+      height: 10px;
+      background: violet;
     }
-    const playParams = {
-      src:"/uploads/2017/12/11.mp3",
-      attr:{
-        volume: 0.8,
-      },
-      events:{
-        play: function() {
-          console.log("开始播放了")
-        },
-        ended: function() {
-          if(isLoop === 0) {
-            // 单曲播放
-            audio.loopPlay(true);
-            console.log('单曲播放');
-          } else if(isLoop === 1) {
-            console.log('列表循环');
-            // 列表循环
-          } else if(isLoop === 2) {
-            console.log('随机播放');
-            // 随机播放
-          }
-        },
-        timeupdate() {
-          console.log(this.currentTime);
-        }
-      }
-    };
-    const audio = new AudioController(playParams);
+  </style>
+  <!-- 播放进度条 -->
+  <div class="process">
+    <div class="p_digital"></div>
+    <span class="currentTime">00:00</span>/<span class="duration">00:00</span>
+  </div>
+
+<script>
+  const processWidthDom = document.querySelector('.p_digital');
+  const currentTimeDom = document.querySelector('.currentTime');
+  const durationDom = document.querySelector('.duration');
+  function conversionTime (value) {
+    let minute = Math.floor(value / 60);
+    minute = minute.toString().length === 1 ? ('0' + minute) : minute;
+    let second = Math.round(value % 60);
+    second = second.toString().length === 1 ? ('0' + second) : second;
+    return `${minute}:${second}`;
+  }
+  let isLoop = 0;
+  // 单曲播放
+  function loop() {
+    isLoop = 0;
+    console.log('单曲播放');
+  }
+  // 列表循环
+  function listLoop() {
+    isLoop = 1;
+    console.log('列表循环');
+  }
+  // 随机播放
+  function radomPlay() {
+    isLoop = 2;
+    console.log('随机播放');
+  }
+
+  // 播放
+  function play () {
+    console.log('播放');
     audio.play();
-  </script>
-</div>
+  }
+
+  // 暂停
+  function stop () {
+    console.log('暂停');
+    audio.pause();
+  }
+  const playParams = {
+    src:'/uploads/2017/12/10.mp3',
+    attr:{
+      volume: 0.4,
+    },
+    events:{
+      play: function() {
+        console.log('开始播放了')
+      },
+      ended: function() {
+        if(isLoop === 0) {
+          // 单曲播放
+          audio.loopPlay(true);
+          console.log('单曲播放');
+        } else if(isLoop === 1) {
+          console.log('列表循环');
+          // 列表循环
+        } else if(isLoop === 2) {
+          console.log('随机播放');
+          // 随机播放
+        }
+      },
+      timeupdate() {
+        console.log(conversionTime(this.currentTime));
+        // 播放进度
+        processWidthDom.style.width  = this.currentTime / this.duration.toFixed(3) * 100 + '%';
+        // 当前时间
+        currentTimeDom.innerHTML = conversionTime(this.currentTime);
+        // 总时长
+        durationDom.innerHTML = conversionTime(this.duration);
+      }
+    }
+  };
+  const audio = new AudioController(playParams);
+  
+</script>
 </body>
 </html>
