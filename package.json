@@ -20,7 +20,7 @@
     "trim-html": "^0.1.7"
   },
   "devDependencies": {
-    "bower": "^1.8.2",
+    "bower": "^1.8.8",
     "supervisor": "^0.12.0"
   }
 }
