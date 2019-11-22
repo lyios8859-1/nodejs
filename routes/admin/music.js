@@ -7,7 +7,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/getLrc', function(req, res, next) {
   console.log(__dirname);
-
   res.send('读取歌词文件内容');
 });
 

@@ -15,30 +15,203 @@
   </style>
 </head>
 <body>
-  <button onclick="loop()">单曲循环</button>
+  <!-- <button onclick="loop()">单曲循环</button>
   <button onclick="listLoop()">列表循环</button>
-  <button onclick="radomPlay()">随机播放</button>
+  <button onclick="radomPlay()">随机播放</button> -->
   <button onclick="stop()">暂停</button>
   <button onclick="play()">播放</button>
 
   <style>
-    .process {
+    .ly-play_container {
+      position: relative;
+      top: 20px;
+      left: 0;
+      margin: 10px;
+      width: 375px;
+      background: #ddd;
+      height: auto;
+      box-shadow: 0px 0px 8px #aaa;
+    }
+
+    .ly-play_container .play-message {
+      height: 32px;
+      line-height: 32px;
+      padding-left: 10px;
+    }
+    .play-message .song-share {
+      height: 22px;
+      line-height: 22px;
+      float: right;
+      margin-right: 10px;
+      width: 50px;
+      color: azure;
+      text-align: center;
+      background: orange;
+      margin-top: 5px;
+      border-radius: 10%;
+    }
+    /*歌词*/
+    .ly-play_container .song-lrc_content {
+      height: 100px;
+      margin: 10px auto;
+      font-size: 14px;
+      box-shadow: inset 0px 0px 4px #333;
+    }
+    .song-lrc_content .lrcline {
+      width: 100%;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+    }
+    .lrc-active {
+      color: red;
+      font-size: 16px;
+    }
+
+    /*禁止选中*/
+    .user-slect-none {
+      -o-user-select: none!important; 
+      -khtml-user-select: none!important; 
+      -webkit-user-select: none!important; 
+      -ms-user-select: none!important; 
+      user-select: none!important;
+      -moz-user-select: none!important; 
+    }
+    /*进度条*/
+    .ly-play_container .process {
       box-sizing: border-box;
       width: 100%;
-      height: 10px;
       background: #ccc;
-      padding: 0 10px;
+      padding-bottom: 5px;
     }
-    .p_digital {
+    
+    .process .p_digital {
       width: 11%;
       height: 10px;
       background: violet;
+      display: inline-block;
     }
+    .process .left {
+      float: left;
+      height: 20px;
+      line-height: 20px;
+      width: 20px;
+      margin-left: 5px;
+      text-align: center;
+      background-color: red;
+    }
+	  .process .right {
+      width: 108px;
+      text-align: center;
+      height: 20px;
+      line-height: 20px;
+      background-color: blue;
+      float: right;
+      margin-right: 5px;
+    }
+    .volume {
+      width: 20px;
+      float: left;
+      margin-left: 5px;
+    }
+	  .process .main {
+	    margin-left: 30px;
+	    margin-right: 118px;
+	    height: 20px;
+      line-height: 20px;
+	    background-color: green;
+	  }
+
+    /*滚动条 satrt*/
+    .scrollbar {
+      overflow-y: auto;
+    }
+    .scrollbar::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    }
+    .scrollbar::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 2px;
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      background: #928e8e;
+    }
+    .scrollbar::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+      background: #ededed;
+    }
+    /*滚动条 end*/
+
   </style>
-  <!-- 播放进度条 -->
-  <div class="process">
-    <div class="p_digital"></div>
-    <span class="currentTime">00:00</span>/<span class="duration">00:00</span>
+  <div class="ly-play_container">
+    <!-- 歌曲信息 -->
+    <div class="play-message">
+      <span class="song-author">崔立伟</span> -
+      <span class="song-title">酒醉的蝴蝶</span>
+      <span class="song-share">曲目</span>
+    </div>
+    <!-- 歌词 -->
+    <div class="song-lrc_content scrollbar user-slect-none" onselectstart="return false;">
+      <div class="lrcline lrc-active">酒醉的蝴蝶 - 崔伟立</div>
+      <div class="lrcline">词：刘海东</div>
+      <div class="lrcline">曲：刘海东</div>
+      <div class="lrcline">编曲：冯丹</div>
+      <div class="lrcline">制作人：冯丹</div>
+      <div class="lrcline">电吹管：音乐老鸟</div>
+      <div class="lrcline">吉他：小志</div>
+      <div class="lrcline">伴唱：凌菲/天籁天/孙艺琪</div>
+      <div class="lrcline">混音：苏洲</div>
+      <div class="lrcline lineHigh">出品人：刘海东</div>
+      <div class="lrcline">怎么也飞不出</div>
+      <div class="lrcline">花花的世界</div>
+      <div class="lrcline">原来我是一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">你的那一句誓约</div>
+      <div class="lrcline">来的轻描又淡写</div>
+      <div class="lrcline">却要换我这一生</div>
+      <div class="lrcline">再也解不开的结</div>
+      <div class="lrcline">春去镜前花</div>
+      <div class="lrcline">秋来水中月</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">花开花时节</div>
+      <div class="lrcline">月落月圆缺</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">怎么也飞不出</div>
+      <div class="lrcline">花花的世界</div>
+      <div class="lrcline">原来我是一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">你的那一句誓约</div>
+      <div class="lrcline">来的轻描又淡写</div>
+      <div class="lrcline">却要换我这一生</div>
+      <div class="lrcline">再也解不开的结</div>
+      <div class="lrcline">春去镜前花</div>
+      <div class="lrcline">秋来水中月</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">花开花时节</div>
+      <div class="lrcline">月落月圆缺</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">春去镜前花</div>
+      <div class="lrcline">秋来水中月</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">花开花时节</div>
+      <div class="lrcline">月落月圆缺</div>
+      <div class="lrcline">原来我就是那一只</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+      <div class="lrcline">酒醉的蝴蝶</div>
+    </div>
+    <!-- 播放进度条 -->
+    <div class="process user-slect-none" onselectstart="return false;">
+      <div class="left"><span>播</span></div>
+      <div class="right"><span class="volume">静</span><span class="currentTime">00:00</span>/<span class="duration">00:00</span></div>
+      <div class="main"><div class="p_digital"></div></div>
+    </div>
   </div>
 
 <script>
@@ -85,10 +258,10 @@
     url: '/music/getLrc',
     data: {},
     success: function (res) {
-      console.log(res);
+      console.log('>>>>', res);
     }
-
   });
+
   const processWidthDom = document.querySelector('.p_digital');
   const currentTimeDom = document.querySelector('.currentTime');
   const durationDom = document.querySelector('.duration');
@@ -129,7 +302,7 @@
   }
 
   const playParams = {
-    src:'/uploads/2017/12/10.mp3',
+    src:'/uploads/2017/12/0.mp3',
     attr:{
       volume: 0.4,
     },
