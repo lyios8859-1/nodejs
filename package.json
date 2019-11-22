@@ -15,7 +15,7 @@
     "jade": "~1.11.0",
     "jquery-file-upload-middleware": "^0.1.8",
     "mongoose": "^5.7.1",
-    "morgan": "~1.7.0",
+    "morgan": "~1.9.1",
     "serve-favicon": "~2.3.0",
     "trim-html": "^0.1.7"
   },
